@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Música con Arrow Functions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-music"></i> Reproductor Musical con Arrow Functions</h1>
+            <p class="subtitle">Ejemplo práctico de JavaScript, APIs y buenas prácticas</p>
+        </header>
+
+        <!-- Sección de búsqueda -->
+        <section class="search-section">
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Busca un artista (ej: Coldplay, Bad Bunny, Queen)..."
+                    autocomplete="off"
+                >
+                <button id="searchBtn" class="btn-primary">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
+            </div>
+            <div class="search-info">
+                <span class="info-tag"><i class="fas fa-lightbulb"></i> Prueba con: Coldplay, Bad Bunny, Queen</span>
+                <span id="searchCount" class="info-tag">0 resultados</span>
+            </div>
+        </section>
+
+        <!-- Reproductor actual -->
+        <section class="player-section">
+            <div class="player-header">
+                <h2><i class="fas fa-play-circle"></i> Ahora suena</h2>
+                <div class="player-status" id="playerStatus">Pausado</div>
+            </div>
+            
+            <div class="now-playing">
+                <div class="album-cover" id="albumCover">
+                    <i class="fas fa-compact-disc"></i>
+                </div>
+                
+                <div class="song-info">
+                    <h3 id="currentSong">Selecciona una canción</h3>
+                    <div class="artist-info" id="currentArtist">
+                        <i class="fas fa-user"></i> <span>Artista</span>
+                    </div>
+                    <div class="song-details">
+                        <span><i class="fas fa-clock"></i> <span id="currentDuration">--:--</span></span>
+                        <span><i class="fas fa-guitar"></i> <span id="currentGenre">Género</span></span>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                        <div class="progress-time">
+                            <span id="currentTime">0:00</span>
+                            <span id="totalTime">0:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button class="control-btn" id="prevBtn" title="Anterior">
+                    <i class="fas fa-step-backward"></i>
+                </button>
+                <button class="control-btn play-btn" id="playBtn" title="Reproducir/Pausar">
+                    <i class="fas fa-play" id="playIcon"></i>
+                </button>
+                <button class="control-btn" id="nextBtn" title="Siguiente">
+                    <i class="fas fa-step-forward"></i>
+                </button>
+                <div class="volume-control">
+                    <i class="fas fa-volume-up volume-icon"></i>
+                    <input type="range" id="volumeSlider" min="0" max="100" value="70" class="volume-slider">
+                </div>
+            </div>
+        </section>
+
+        <!-- Resultados de búsqueda -->
+        <section class="results-section">
+            <div class="section-header">
+                <h2><i class="fas fa-list-music"></i> Canciones encontradas</h2>
+                <div class="sort-controls">
+                    <button id="sortTitle" class="sort-btn active">
+                        <i class="fas fa-sort-alpha-down"></i> Título
+                    </button>
+                    <button id="sortDuration" class="sort-btn">
+                        <i class="fas fa-clock"></i> Duración
+                    </button>
+                </div>
+            </div>
+            
+            <div id="resultsContainer">
+                <div class="loading-state" id="loadingMessage">
+                    <div class="spinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                    <p>Escribe un artista y haz click en Buscar...</p>
+                    <p class="loading-tip">
+                        <i class="fas fa-lightbulb"></i> 
+                        Usamos arrow functions para filtrar y mapear los resultados
+                    </p>
+                </div>
+                
+                <div id="songList" class="song-list"></div>
+                
+                <div id="errorContainer" class="error-state" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div class="error-message" id="errorMessage"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Panel educativo -->
+        <aside class="education-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-code"></i> Arrow Functions en Acción</h3>
+            </div>
+            
+            <div class="code-examples">
+                <div class="example">
+                    <h4><i class="fas fa-check-circle"></i> Callbacks en Array Methods</h4>
+                    <pre><code>// Filtrar canciones largas
+const cancionesLargas = canciones.filter(
+    cancion => cancion.duracion > 300
+);
+
+// Mapear a formato requerido
+const cancionesFormateadas = canciones.map(
+    cancion => ({
+        titulo: cancion.nombre,
+        artista: cancion.artista,
+        duracion: formatDuracion(cancion.duracion)
+    })
+);</code></pre>
+                </div>
+                
+                <div class="example">
+                    <h4><i class="fas fa-check-circle"></i> Event Listeners y Promesas</h4>
+                    <pre><code>// Event listener con arrow function
+btn.addEventListener('click', () => {
+    this.buscarCanciones(query);
+});
+
+// Promesas con arrow functions
+fetch(url)
+    .then(response => response.json())
+    .then(data => this.procesarDatos(data))
+    .catch(error => console.error(error));</code></pre>
+                </div>
+            </div>
+            
+            <div class="optimization-tips">
+                <h4><i class="fas fa-rocket"></i> Optimizaciones Implementadas</h4>
+                <ul>
+                    <li><strong>Debouncing</strong> en búsquedas</li>
+                    <li><strong>Cache</strong> de resultados API</li>
+                    <li><strong>Memoización</strong> de funciones</li>
+                    <li>Lazy loading de imágenes</li>
+                </ul>
+            </div>
+        </aside>
+
+        <footer class="footer">
+            <p>Ejemplo educativo de JavaScript - Arrow Functions con APIs</p>
+            <div class="footer-links">
+                <button id="demoBtn" class="btn-secondary">
+                    <i class="fas fa-play"></i> Ver Demostración
+                </button>
+                <button id="resetBtn" class="btn-secondary">
+                    <i class="fas fa-redo"></i> Reiniciar
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="musicAPI.js"></script>
+    <script src="player.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
